@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
+  <title>Japan Is Easy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/vendor.css">
+  <link rel="stylesheet" href="styles/style.min.css">
+</head>
+<body>
+  <main class="main">
+    <!-- Шапка -->
+    <header class="header">
+      <div class="container">
+        <a class="header__logo" href="/">
+          <img class="header__logo-icon" src="images/logo.png" alt="Логотип">
+          <h3 class="header__logo-title">JapanIsEasy</h3>
+        </a>
+      </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="screen screen-main" v-show="showMain">
+      <div class="container">
+        <div class="screen-main__header">
+          <h1 class="screen-main__title">Добро пожаловать на сайт для повторения японского алфавита</h1>
+        </div>
+        <div class="screen-main__body">
+          <button class="btn-reset screen__btn" @click="goToPlay">Хирагана</button>
+          <button class="btn-reset screen__btn" @click="goToPlay">Катакана</button>
+          <button class="btn-reset screen__btn" @click="goToDesc">Описание</button>
+          <button class="btn-reset screen__btn" @click="goToSocial">Автор</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран с описанием -->
+    <section class="screen screen-desc" v-show="showDesc">
+      <div class="container">
+        <div class="screen-desc__header">
+          <h2 class="screen-desc__title">Описание</h2>
+        </div>
+        <div class="screen-desc__body">
+          <div class="screen-desc__info">
+            <p class="screen-desc__info-desc">
+              <a href="/">JapanIsEasy</a> - Это сайт для помощи изучения Хираганы и Катаканы в японском алфавите.
+            </p>
+            <p class="screen-desc__info-desc">Как пользоваться сайтом:</p>
+            <ul class="list-reset screen-desc__info-list">
+              <li class="screen-desc__info-list__item">Выберите на главном экране, что желаете тренировать: Хирагану или Катакану</li>
+              <li class="screen-desc__info-list__item">Далее на экране появится сам иероглиф и варианты ответа</li>
+              <li class="screen-desc__info-list__item">Выберите любой из четырех вариантов пока не истекло время</li>
+              <li class="screen-desc__info-list__item">После ответа ниже к счетчикам добавится +1 в зависимости от правильности ответа</li>
+              <li class="screen-desc__info-list__item">Когда вы достигните последнего иероглифа у Вас появится всплывающее меню с информацией о вашей игре (сколько правильных/неправильных ответов было дано)</li>
+            </ul>
+          </div>
+          <button class="btn-reset screen__btn btn__back" @click="goToMain">
+            <i class="fas fa-arrow-left"></i>
+            Назад
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран с автором -->
+    <section class="screen screen-author" v-show="showSocial">
+      <div class="container">
+        <div class="screen-author__header">
+          <h2 class="screen-author__title">Об Авторе</h2>
+        </div>
+        <div class="screen-author__body">
+          <a class="screen__btn screen-author__btn" href="https://t.me/reisenjougahara" target="_blank">
+            <i class="fab fa-telegram"></i>
+          </a>
+          <a class="screen__btn screen-author__btn" href="https://vk.com/misha_shilayev" target="_blank">
+            <i class="fab fa-vk"></i>
+          </a>
+          <a class="screen__btn screen-author__btn" href="https://www.instagram.com/_senjougahara_/" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a class="screen__btn screen-author__btn" href="https://github.com/Senj0ugahara" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+          <button class="btn-reset screen__btn btn__back" @click="goToMain">
+            <i class="fas fa-arrow-left"></i>
+            Назад
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран со стартом -->
+    <section class="screen screen-play" v-show="showPlay">
+      <div class="container">
+        <div class="screen-play__body">
+          <div class="screen-play__question">
+            <h3 class="screen-play__hieroglyph">Выберите правильное обозначение иероглифа <strong>{{ questions[number][0] }}</strong> на латинице</h3>
+            <div class="screen-play__timer">
+              <p>00:{{ time }}</p>
+            </div>
+          </div>
+          <div class="screen-play__answers">
+            <button class="btn-reset screen__btn btn__answer"
+                    v-for="(answer, i) in questions[number][1]"
+                    @click="nextQuestions(questions[number][2][i])">
+                    {{ answer }}</button>
+          </div>
+          <div class="screen-play__answers-score">
+            <p class="screen-play__answers-score_right">Правильных ответов: {{ scoreRight }}</p>
+            <p class="screen-play__answers-score_wrong">Не правильных ответов: {{ scoreWrong }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран с результатом -->
+    <section class="screen screen-final" v-show="showResult">
+      <div class="container">
+        <div class="screen-final__score">
+          <p class="screen-final__score-right">Правильных ответов: {{ scoreRight }}</p>
+          <p class="screen-final__score-wrong">Не правильных ответов: {{ scoreWrong }}</p>
+        </div>
+        <div class="screen-final__btns">
+          <button class="btn-reset screen__btn btn__restart" @click="goToPlay">Повторить</button>
+          <button class="btn-reset screen__btn btn__back" @click="goToMain">Главное меню</button>
+        </div>
+      </div>
+    </section>
+    <!-- Подвал -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__body">
+          <p class="footer__privacy">
+            &#169;&nbsp;2023&nbsp;
+            <a class="footer__privacy-link" href="/">JapanIsEasy</a> 
+          </p>
+          <p class="footer__author">
+            creaty by Rei Senjougahara
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="scripts/plugins/vue.global.prod.js"></script>
+  <script src="scripts/main.min.js"></script>
+</body>
+</html>

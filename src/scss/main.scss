@@ -1,0 +1,16 @@
+// Базовые подключения
+@import "fonts";
+@import "settings";
+@import "vars";
+
+// Подключения компонентов страницы (маленькие)
+// @import "./components/nav";
+
+// Подключения компонентов страницы (большие)
+@import "./components/header";
+@import "./components/footer";
+@import "./components/screen-main";
+@import "./components/screen-desc";
+@import "./components/screen-author";
+@import "./components/screen-play";
+@import "./components/screen-final";

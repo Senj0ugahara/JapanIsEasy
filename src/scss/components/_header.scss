@@ -1,0 +1,32 @@
+.header {
+  flex: 0 1 auto;
+  max-height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+
+    &-icon {
+      display: block;
+      width: 50px;
+      height: 50px;
+    }
+
+    &-title{
+      display: block;
+      margin-left: 20px;
+      font-family: 'Eczar', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      color: white;
+      transition: color .3s ease;
+
+      &:hover {
+        color: #c22626;
+      }
+    }
+  }
+}

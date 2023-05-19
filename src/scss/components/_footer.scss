@@ -1,0 +1,32 @@
+.footer {
+  flex: 0 1 auto;
+  max-height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &__body {
+    padding: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__privacy {
+    font-size: 18px;
+    color: #fff;
+
+    &-link {
+      color:#fff;
+      transition: color .3s ease;
+
+      &:hover {
+        color: #c22626;
+      }
+    }
+  }
+
+  &__author {
+    font-size: 22px;
+    color: #fff;
+    text-align: right;
+  }
+}

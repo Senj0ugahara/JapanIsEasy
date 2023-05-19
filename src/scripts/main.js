@@ -4,61 +4,99 @@ let app = {
       showMain: true,
       showDesc: false,
       showSocial: false,
-      showPlay: false,
-      showResult: false,
+      showPlayHira: false,
+      showPlayKata: false,
+      showResultHira: false,
+      showResultKata: false,
       number: 0,
       scoreRight: 0,
       scoreWrong: 0,
       time: 30,
       count: null,
-      questions: questions,
+      questionsHira: questionsHira,
+      questionsKata: questionsKata,
       selectedBtn: null,
     }
   },
   methods: {
     goToMain() {
-      this.showMain   = true;
-      this.showDesc   = false;
-      this.showSocial = false;
-      this.showPlay   = false;
-      this.showResult  = false;
+      this.showMain           = true;
+      this.showDesc           = false;
+      this.showSocial         = false;
+      this.showPlayHira       = false;
+      this.showPlayKata       = false;
+      this.showResultHira     = false;
+      this.showResultKata     = false;
     },
     goToDesc() {
-      this.showMain   = false;
-      this.showDesc   = true;
-      this.showSocial = false;
-      this.showPlay   = false;
-      this.showResult  = false;
+      this.showMain           = false;
+      this.showDesc           = true;
+      this.showSocial         = false;
+      this.showPlayHira       = false;
+      this.showPlayKata       = false;
+      this.showResultHira     = false;
+      this.showResultKata     = false;
     },
     goToSocial() {
-      this.showMain   = false;
-      this.showDesc   = false;
-      this.showSocial = true;
-      this.showPlay   = false;
-      this.showResult  = false;
+      this.showMain           = false;
+      this.showDesc           = false;
+      this.showSocial         = true;
+      this.showPlayHira       = false;
+      this.showPlayKata       = false;
+      this.showResultHira     = false;
+      this.showResultKata     = false;
     },
-    goToPlay() {
+    goToPlayHira() {
       this.scoreRight = 0;
       this.scoreWrong = 0;
       this.timer();
-      this.showMain   = false;
-      this.showDesc   = false;
-      this.showSocial = false;
-      this.showPlay   = true;
-      this.showResult  = false;
+      this.showMain           = false;
+      this.showDesc           = false;
+      this.showSocial         = false;
+      this.showPlayHira       = true;
+      this.showPlayKata       = false;
+      this.showResultHira     = false;
+      this.showResultKata     = false;
     },
-    goToResult() {
-      this.showMain   = false;
-      this.showDesc   = false;
-      this.showSocial = false;
-      this.showPlay   = false;
-      this.showResult  = true;
+    goToPlayKata() {
+      this.scoreRight = 0;
+      this.scoreWrong = 0;
+      this.timer();
+      this.showMain           = false;
+      this.showDesc           = false;
+      this.showSocial         = false;
+      this.showPlayHira       = false;
+      this.showPlayKata       = true;
+      this.showResultHira     = false;
+      this.showResultKata     = false;
+    },
+    goToResultHira() {
+      this.showMain           = false;
+      this.showDesc           = false;
+      this.showSocial         = false;
+      this.showPlayHira       = false;
+      this.showPlayKata       = false;
+      this.showResultHira     = true;
+      this.showResultKata     = false;
+    },
+    goToResultKata() {
+      this.showMain           = false;
+      this.showDesc           = false;
+      this.showSocial         = false;
+      this.showPlayHira       = false;
+      this.showPlayKata       = false;
+      this.showResultHira     = false;
+      this.showResultKata     = true;
     },
     nextQuestions(answer) {
-      if (this.number == 44) {
+      if (this.number == 44 && this.showPlayHira == true) {
         clearTimeout(this.count);
         this.number = 0;
-        this.endGame();
+        this.endGameHira();
+      } else if (this.number == 44 && this.showPlayKata == true) {
+        clearTimeout(this.count);
+        this.number = 0;
+        this.endGameKata();
       } else {
         this.number++;
         this.time = 30;
@@ -80,14 +118,21 @@ let app = {
       } else {
         this.count = setTimeout(this.timer, 1000);
       }
-      if (this.number > 44) {
+      if (this.number > 44 && this.showPlayHira == true) {
         clearTimeout(this.count);
         this.number = 0;
-        this.endGame();
+        this.endGameHira();
+      } else if (this.number > 44 && this.showPlayKata == true) {
+        clearTimeout(this.count);
+        this.number = 0;
+        this.endGameKata();
       }
     },
-    endGame() {
-      this.goToResult();
+    endGameHira() {
+      this.goToResultHira();
+    },
+    endGameKata() {
+      this.goToResultKata();
     }
   }
 }

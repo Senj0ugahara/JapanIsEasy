@@ -32,8 +32,8 @@
           <h1 class="screen-main__title">Добро пожаловать на сайт для повторения японского алфавита</h1>
         </div>
         <div class="screen-main__body">
-          <button class="btn-reset screen__btn" @click="goToPlay">Хирагана</button>
-          <button class="btn-reset screen__btn" @click="goToPlay">Катакана</button>
+          <button class="btn-reset screen__btn" @click="goToPlayHira">Хирагана</button>
+          <button class="btn-reset screen__btn" @click="goToPlayKata">Катакана</button>
           <button class="btn-reset screen__btn" @click="goToDesc">Описание</button>
           <button class="btn-reset screen__btn" @click="goToSocial">Автор</button>
         </div>
@@ -95,20 +95,20 @@
       </div>
     </section>
 
-    <!-- Экран со стартом -->
-    <section class="screen screen-play" v-show="showPlay">
+    <!-- Экран со стартом Хираганы -->
+    <section class="screen screen-play" v-show="showPlayHira">
       <div class="container">
         <div class="screen-play__body">
           <div class="screen-play__question">
-            <h3 class="screen-play__hieroglyph">Выберите правильное обозначение иероглифа <strong>{{ questions[number][0] }}</strong> на латинице</h3>
+            <h3 class="screen-play__hieroglyph">Выберите правильное обозначение иероглифа <strong>{{ questionsHira[number][0] }}</strong> на латинице</h3>
             <div class="screen-play__timer">
               <p>00:{{ time }}</p>
             </div>
           </div>
           <div class="screen-play__answers">
             <button class="btn-reset screen__btn btn__answer"
-                    v-for="(answer, i) in questions[number][1]"
-                    @click="nextQuestions(questions[number][2][i])">
+                    v-for="(answer, i) in questionsHira[number][1]"
+                    @click="nextQuestions(questionsHira[number][2][i])">
                     {{ answer }}</button>
           </div>
           <div class="screen-play__answers-score">
@@ -119,19 +119,58 @@
       </div>
     </section>
 
-    <!-- Экран с результатом -->
-    <section class="screen screen-final" v-show="showResult">
+    <!-- Экран со стартом Катаканы -->
+    <section class="screen screen-play" v-show="showPlayKata">
+      <div class="container">
+        <div class="screen-play__body">
+          <div class="screen-play__question">
+            <h3 class="screen-play__hieroglyph">Выберите правильное обозначение иероглифа <strong>{{ questionsKata[number][0] }}</strong> на латинице</h3>
+            <div class="screen-play__timer">
+              <p>00:{{ time }}</p>
+            </div>
+          </div>
+          <div class="screen-play__answers">
+            <button class="btn-reset screen__btn btn__answer"
+                    v-for="(answer, i) in questionsKata[number][1]"
+                    @click="nextQuestions(questionsKata[number][2][i])">
+                    {{ answer }}</button>
+          </div>
+          <div class="screen-play__answers-score">
+            <p class="screen-play__answers-score_right">Правильных ответов: {{ scoreRight }}</p>
+            <p class="screen-play__answers-score_wrong">Не правильных ответов: {{ scoreWrong }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран с результатом Хираганы -->
+    <section class="screen screen-final" v-show="showResultHira">
       <div class="container">
         <div class="screen-final__score">
           <p class="screen-final__score-right">Правильных ответов: {{ scoreRight }}</p>
           <p class="screen-final__score-wrong">Не правильных ответов: {{ scoreWrong }}</p>
         </div>
         <div class="screen-final__btns">
-          <button class="btn-reset screen__btn btn__restart" @click="goToPlay">Повторить</button>
+          <button class="btn-reset screen__btn btn__restart" @click="goToPlayHira">Повторить</button>
           <button class="btn-reset screen__btn btn__back" @click="goToMain">Главное меню</button>
         </div>
       </div>
     </section>
+
+    <!-- Экран с результатом Катаканы -->
+    <section class="screen screen-final" v-show="showResultKata">
+      <div class="container">
+        <div class="screen-final__score">
+          <p class="screen-final__score-right">Правильных ответов: {{ scoreRight }}</p>
+          <p class="screen-final__score-wrong">Не правильных ответов: {{ scoreWrong }}</p>
+        </div>
+        <div class="screen-final__btns">
+          <button class="btn-reset screen__btn btn__restart" @click="goToPlayKata">Повторить</button>
+          <button class="btn-reset screen__btn btn__back" @click="goToMain">Главное меню</button>
+        </div>
+      </div>
+    </section>
+
     <!-- Подвал -->
     <footer class="footer">
       <div class="container">
